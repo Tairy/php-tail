@@ -13,8 +13,6 @@
         "jasonlewis/resource-watcher": "1.2.*"
     },
     "autoload": {
-        "psr-0": {
-            "Tail": "src/"
-        }
+        "classmap": ["src/"]
     }
 }
