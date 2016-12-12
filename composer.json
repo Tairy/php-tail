@@ -1,0 +1,20 @@
+{
+    "name": "tairy/php-tail",
+    "description": "A php tail library.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tairy",
+            "email": "tairyguo@gmail.com"
+        }
+    ],
+    "require": {
+        "jasonlewis/resource-watcher": "1.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Tail": "src/"
+        }
+    }
+}
