@@ -32,8 +32,9 @@ class Tail
     public function __construct($filepath)
     {
         $this->_filepath = $filepath;
-        $this->_lastPos = filesize($this->_filepath);
-        $this->_isFirst = false;
+        if(file_exists($this->_filepath)) {
+            $this->_lastPos = filesize($this->_filepath);
+        }
     }
 
     /**
