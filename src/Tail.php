@@ -21,20 +21,12 @@ class Tail
     private $_filepath;
 
     /**
-     * @var integer
-     */
-    private $_lastPos;
-
-    /**
      * Tail constructor.
      * @param $filepath
      */
     public function __construct($filepath)
     {
         $this->_filepath = $filepath;
-        if (file_exists($this->_filepath)) {
-            $this->_lastPos = filesize($this->_filepath);
-        }
     }
 
     /**
@@ -88,10 +80,14 @@ class Tail
             return false;
         }
 
+        if(!$lastPos) {
+            $lastPos = filesize($this->_filepath);
+        }
+
         if (!$adaptive) {
             $buffer = 4096;
         } else {
-            $newStringsCount = filesize($this->_filepath) - $this->_lastPos;
+            $newStringsCount = filesize($this->_filepath) - $lastPos;
             $buffer = $newStringsCount < 200 ? 64 : ($newStringsCount < 1000 ? 512 : 4096);
         }
         $output = '';
