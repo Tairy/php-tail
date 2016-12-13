@@ -32,7 +32,7 @@ class Tail
     public function __construct($filepath)
     {
         $this->_filepath = $filepath;
-        if(file_exists($this->_filepath)) {
+        if (file_exists($this->_filepath)) {
             $this->_lastPos = filesize($this->_filepath);
         }
     }
@@ -81,7 +81,7 @@ class Tail
      * @param bool $adaptive
      * @return bool|string
      */
-    public function readByPos($adaptive = true)
+    public function readByPos(&$lastPos, $adaptive = true)
     {
         $fp = @fopen($this->_filepath, 'rb');
         if ($fp === false) {
@@ -95,42 +95,13 @@ class Tail
             $buffer = $newStringsCount < 200 ? 64 : ($newStringsCount < 1000 ? 512 : 4096);
         }
         $output = '';
-        fseek($fp, $this->_lastPos);
+        fseek($fp, $lastPos);
         while (!feof($fp)) {
             $output .= fread($fp, $buffer);
         }
 
-        $this->_lastPos = ftell($fp);
-        $this->_isFirst = true;
+        $lastPos = ftell($fp);
         fclose($fp);
         return $output;
-    }
-
-    /**
-     * @param $lines
-     */
-    public function tail($lines)
-    {
-        if(!isset($lines)) {
-            $lines = self::FIRST_READ_LINES;
-        }
-
-        echo $this->readByLines($lines);
-    }
-
-    /**
-     * tailf()
-     */
-    public function tailf()
-    {
-        echo $this->readByLines(self::FIRST_READ_LINES);
-        $files = new Filesystem();
-        $tracker = new Tracker();
-        $watcher = new Watcher($tracker, $files);
-        $listener = $watcher->watch($this->_filepath);
-        $listener->modify(function () {
-            echo $this->readByPos();
-        });
-        $watcher->start();
     }
 }

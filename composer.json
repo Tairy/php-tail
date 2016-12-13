@@ -9,9 +9,7 @@
             "email": "tairyguo@gmail.com"
         }
     ],
-    "require": {
-        "jasonlewis/resource-watcher": "1.2.*"
-    },
+    "require": {},
     "autoload": {
         "classmap": ["src/"]
     }

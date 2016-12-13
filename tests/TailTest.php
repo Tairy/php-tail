@@ -5,5 +5,6 @@ require_once __DIR__ . '/../src/Tail.php';
 
 use Tail\Tail;
 
-$t = new Tail('/Users/tairy/Documents/working/webhook/lib/test.txt');
-$t->tailf();
+$t = new Tail('/Users/tairy/Documents/working/SF_Ops/test.txt');
+//$t->tailf();
+echo $t->tail(4);
